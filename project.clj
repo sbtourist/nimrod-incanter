@@ -11,5 +11,10 @@
                 [swingrepl "1.0.0-SNAPSHOT"]
                 [jline "0.9.94"]
                 ]
+ :dev-dependencies [
+                    [compojure "0.6.5"]
+                    [ring/ring-core "0.3.11"]
+                    [ring/ring-jetty-adapter "0.3.11"]
+                    ]
  :main nimrod.incanter.main
  )
