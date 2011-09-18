@@ -16,5 +16,6 @@
                     [ring/ring-core "0.3.11"]
                     [ring/ring-jetty-adapter "0.3.11"]
                     ]
+ :aot [nimrod.incanter.main]
  :main nimrod.incanter.main
  )

@@ -4,4 +4,10 @@
  (:gen-class)
  )
 
-(defn -main [& args])
+(defn -main [& args]
+  (if-let [command (first args)]
+    (binding [*ns* (the-ns 'nimrod.incanter.main)]
+      (load-file command)
+      )
+    )
+  )
