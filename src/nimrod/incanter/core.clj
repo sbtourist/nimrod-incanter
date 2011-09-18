@@ -43,7 +43,7 @@
     (let [response (http/get url)]
       (if (= 200 (response :status))
         (if-let [values ((json/read-json (response :body)) :values)]
-          (if (nil? tag)
+          (if (= :no-tag tag)
             (incanter/dataset ["timestamp" value] (export-fn values value nil))
             (incanter/dataset ["timestamp" value tag] (export-fn values value tag))
             )
