@@ -22,6 +22,16 @@ Load Nimrod metrics as Incanter datasets, i.e.:
                              (from-nimrod "http://localhost:7000" (from-log "1" (read-alert "test1" "alert"))) 
                                (view (time-series-plot "timestamp" "alert")))
 
+As an alternative, you can put your Nimrod-Incanter code into an external file, let's say "test.clj":
+
+    (with-data 
+      (from-nimrod "http://localhost:7000" (from-log "1" (read-alert "test1" "alert"))) 
+        (view (time-series-plot "timestamp" "alert")))
+
+And load it:
+
+    $> sh ./load.sh test.clj
+
 ## License
 
 Copyright (C) 2011 [Sergio Bossa](http://twitter.com/sbtourist)
