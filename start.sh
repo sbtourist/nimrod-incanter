@@ -1,1 +1,1 @@
-./lein repl
+`pwd`/lein repl

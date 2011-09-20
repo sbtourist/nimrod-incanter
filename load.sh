@@ -1,1 +1,1 @@
-./lein run $1
+`pwd`/lein run $1

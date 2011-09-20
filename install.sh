@@ -1,1 +1,1 @@
-./lein deps
+`pwd`/lein deps
