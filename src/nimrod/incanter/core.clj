@@ -1,11 +1,10 @@
 (ns nimrod.incanter.core
- (:use
+ (:require
    [clojure.string :as string :only [split]]
-   [clojure.contrib.json :as json :only [read-json]]
-   [clj-http.client :as http  :only [get]]
+   [cheshire.core :as json]
+   [clj-http.client :as http :only [get]]
    [incanter.core :as incanter])
- (:refer-clojure :exclude [await get])
- )
+ (:refer-clojure :exclude [await get]))
 
 (defn- number-or-string [v]
   (if (re-matches #"\d+" v) (Long. v) v))
@@ -32,7 +31,7 @@
 (defn export [url value tag export-fn]
   (let [response (http/get url)]
     (if (= 200 (response :status))
-      (if-let [values ((json/read-json (response :body)) :values)]
+      (if-let [values ((json/parse-string (response :body) true) :values)]
         (if (= :no-tag tag)
           (incanter/dataset ["timestamp" value] (export-fn values value nil))
           (incanter/dataset ["timestamp" value tag] (export-fn values value tag)))
@@ -47,22 +46,22 @@
   `(let [~'log ~l]
      (do ~@forms)))
 
-(defmacro read-alert [a value age tag]
+(defmacro read-alert [& {a :name value :metric from :from to :to tag :tag}]
   `(let [alert# ~a
-         url# (str ~'base "/logs/" ~'log "/alerts/" alert# "/history?age=" ~age)]
+         url# (str ~'base "/logs/" ~'log "/alerts/" alert# "/history?from=" ~from "&to=" ~to)]
      (export url# ~value ~tag export-alerts)))
 
-(defmacro read-gauge [g value age tag]
+(defmacro read-gauge [& {g :name value :metric from :from to :to tag :tag}]
   `(let [gauge# ~g
-         url# (str ~'base "/logs/" ~'log "/gauges/" gauge# "/history?age=" ~age)]
+         url# (str ~'base "/logs/" ~'log "/gauges/" gauge# "/history?from=" ~from "&to=" ~to)]
      (export url# ~value ~tag export-gauges)))
 
-(defmacro read-counter [c value age tag]
+(defmacro read-counter [& {c :name value :metric from :from to :to tag :tag}]
   `(let [counter# ~c
-         url# (str ~'base "/logs/" ~'log "/counters/" counter# "/history?age=" ~age)]
+         url# (str ~'base "/logs/" ~'log "/counters/" counter# "/history?from=" ~from "&to=" ~to)]
      (export url# ~value ~tag export-counters)))
 
-(defmacro read-timer [t value age tag]
+(defmacro read-timer [& {t :name value :metric from :from to :to tag :tag}]
   `(let [timer# ~t
-         url# (str ~'base "/logs/" ~'log "/timers/" timer# "/history?age=" ~age)]
+         url# (str ~'base "/logs/" ~'log "/timers/" timer# "/history?from=" ~from "&to=" ~to)]
      (export url# ~value ~tag export-timers)))
