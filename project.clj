@@ -1,4 +1,4 @@
-(defproject nimrod-incanter "0.1-SNAPSHOT"
+(defproject nimrod-incanter "0.1"
  :description "Nimrod metrics analysis with Incanter."
  :dependencies [[org.clojure/clojure "1.4.0"]
                 [cheshire "4.0.0"]
