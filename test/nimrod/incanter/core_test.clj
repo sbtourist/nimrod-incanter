@@ -49,4 +49,4 @@
 (deftest test-with-multiple-tags
   (let [dataset (from-nimrod "http://localhost:8182" (from-log "1" (read-gauge :name "test-with-tags" :metric "gauge" :from 1 :to 2 :tags ["tag" "tag2"])))]
     (is (= [:column-names ["timestamp" "gauge" "tag" "tag2"]] (first dataset)))
-    (is (= [:rows '({"gauge" 1 "timestamp" 1 "tag" 1 "tag2" 11} {"gauge" 2 "timestamp" 2 "tag" 2 "tag2" 22})] (second dataset)))))
+    (is (= [:rows '({"gauge" 1 "timestamp" 1 "tag" 1 "tag2" "1:1"} {"gauge" 2 "timestamp" 2 "tag" 2 "tag2" "2:2"})] (second dataset)))))

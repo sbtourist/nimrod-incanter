@@ -11,7 +11,7 @@
 
 (defn- extract-tags [tags all-tags]
   (if (and (seq tags) (seq all-tags))
-    (let [all-tags-map (apply conj {} (map #(string/split %1 #":") all-tags))]
+    (let [all-tags-map (apply conj {} (map #(string/split %1 #":" 2) all-tags))]
       (into [] (for [tag tags] (number-or-string (all-tags-map tag)))))
     [nil]))
 

@@ -15,7 +15,7 @@
   (http/GET "/logs/1/timers/test/history" [from to]
     {:status 200 :body (json/generate-string {:values [{:timestamp (Long/valueOf from) :end 0 :timer 1 :tags ["tag:2"]} {:timestamp (Long/valueOf to) :end 2 :timer 2 :tags ["tag:2"]}]})})
   (http/GET "/logs/1/gauges/test-with-tags/history" [from to]
-    {:status 200 :body (json/generate-string {:values [{:timestamp (Long/valueOf from) :gauge 1 :tags ["tag:1" "tag2:11"]} {:timestamp (Long/valueOf to) :gauge 2 :tags ["tag:2" "tag2:22"]}]})}))
+    {:status 200 :body (json/generate-string {:values [{:timestamp (Long/valueOf from) :gauge 1 :tags ["tag:1" "tag2:1:1"]} {:timestamp (Long/valueOf to) :gauge 2 :tags ["tag:2" "tag2:2:2"]}]})}))
 
 (defn start-mock-server []
   (jetty/run-jetty (handler/api test-routes) {:port 8182 :join? false}))
