@@ -31,9 +31,10 @@
   (let [response (http/get url)]
     (if (= 200 (response :status))
       (if-let [values ((json/parse-string (response :body) true) :values)]
-        (if (seq tags)
-          (incanter/dataset (apply conj ["timestamp" value] tags) (export-fn values value tags))
-          (incanter/dataset ["timestamp" value] (export-fn values value nil)))
+        (incanter/$order :timestamp :asc
+          (if (seq tags)
+            (incanter/dataset (apply conj ["timestamp" value] tags) (export-fn values value tags))
+            (incanter/dataset ["timestamp" value] (export-fn values value nil))))
         (throw (RuntimeException. (str "Unable to export metric " value " from " url))))
       (throw (RuntimeException. (str "Unable to export metric " value " from " url))))))
 
