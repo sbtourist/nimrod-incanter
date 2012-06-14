@@ -25,7 +25,7 @@ In order to be correctly read, you have to output tags in your application in th
 
 Now you can start processing them with Incanter, i.e. you can view them:
 
-    nimrod.incanter.main=> (view (line-chart "timestamp" "gauge" :data data))
+    (view (line-chart "timestamp" "gauge" :data data))
 
 As an alternative, you can put your Nimrod-Incanter code into an external file, let's say "test.clj":
 
